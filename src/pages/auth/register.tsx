@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router"
@@ -11,9 +12,12 @@ export default function RegisterPage() {
 
     return (
         <>
+            <Head>
+                <title>Register</title>
+            </Head>
             <div className="flex h-screen flex-wrap items-center justify-center lg:justify-between px-20">
                 <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
-                    <Image src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" width={500} height={500} alt="Login Image" className="w-full" />
+                    <Image src="/loginImage.svg" width={500} height={500} alt="Login Image" className="w-fit mx-auto" />
                 </div>
 
                 <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">

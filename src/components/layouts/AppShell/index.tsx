@@ -10,7 +10,7 @@ export default function AppShell(props: AppShellProps) {
     const { children } = props;
     const { pathname } = useRouter();
 
-    const disableNavbar = ['/auth/login', '/auth/register'];
+    const disableNavbar = ['/auth/login', '/auth/register', '/404'];
 
     return (
         <main>
