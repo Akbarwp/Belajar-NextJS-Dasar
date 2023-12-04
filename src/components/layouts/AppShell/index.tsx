@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import Navbar from "../Navbar";
 
 type AppShellProps = {
@@ -7,10 +8,13 @@ type AppShellProps = {
 export default function AppShell(props: AppShellProps) {
 
     const { children } = props;
+    const { pathname } = useRouter();
+
+    const disableNavbar = ['/auth/login', '/auth/register'];
 
     return (
         <main>
-            <Navbar />
+            {!disableNavbar.includes(pathname) && <Navbar />}
             {children}
         </main>
     )
