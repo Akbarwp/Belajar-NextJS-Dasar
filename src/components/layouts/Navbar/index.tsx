@@ -30,18 +30,20 @@ export default function Navbar() {
                         <li><Link href="/about">About</Link></li>
                         <li>
                             <div className="dropdown dropdown-bottom dropdown-hover">
-                                <div tabIndex={0} role="button">Dropdown</div>
+                                <div tabIndex={0} role="button">Shop</div>
                                 <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                                    <li><a>Item 1</a></li>
-                                    <li><a>Item 2</a></li>
+                                    <li><Link href="/shop">Index</Link></li>
+                                    <li><Link href="/shop/guitar">Guitar</Link></li>
+                                    <li><Link href="/shop/guitar/bass">Bass</Link></li>
                                 </ul>
                             </div>
                         </li>
                         <li><Link href="/product">Product</Link></li>
                     </ul>
                 </div>
-                <div className="navbar-end">
-                    <a className="btn">Button</a>
+                <div className="navbar-end gap-x-2">
+                    <Link href="/auth/register" className="btn btn-accent uppercase font-bold">Register</Link>
+                    <Link href="/auth/login" className="btn btn-warning uppercase font-bold">Login</Link>
                 </div>
             </div>
         </>
