@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { productType } from "@/types/product.type";
+import Link from "next/link";
 
 export default function Index() {
     //? Client-Side Rendering Menggunakan bawaan JS yaitu fetch()
@@ -49,9 +50,9 @@ export default function Index() {
                                 <div key={product.id} className="card card-compact w-96 bg-base-100 shadow-xl">
                                     <figure><img src={product.image} alt={product.name} /></figure>
                                     <div className="card-body">
-                                        <h2 className="text-xl font-bold text-fun-green">{product.name}</h2>
+                                        <Link href={`/product/${product.id}`} className="text-xl font-bold text-fun-green">{product.name}</Link>
                                         <p className="text-base text-tradewind">{product.category}</p>
-                                        <p className="text-base font-bold text-fun-green">{product.price.toLocaleString('id-ID', { style: "currency", currency: "IDR" })}</p>
+                                        <h2 className="text-base font-bold text-fun-green">{product.price.toLocaleString('id-ID', { style: "currency", currency: "IDR" })}</h2>
                                     </div>
                                 </div>
                             ))}
