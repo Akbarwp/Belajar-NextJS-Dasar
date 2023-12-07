@@ -2,14 +2,7 @@ import { fetcher } from "@/lib/swr/fetcher";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-
-type productType = {
-    id: number;
-    name: string;
-    category: string;
-    price: number;
-    image: string;
-}
+import { productType } from "@/types/product.type";
 
 export default function Index() {
     //? Client-Side Rendering Menggunakan bawaan JS yaitu fetch()
