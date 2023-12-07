@@ -1,56 +1,70 @@
+import { fetcher } from "@/lib/swr/fetcher";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import useSWR from "swr";
 
 type productType = {
     id: number;
     name: string;
+    category: string;
     price: number;
-    discount: number;
+    image: string;
 }
 
 export default function Index() {
+    //? Client-Side Rendering Menggunakan bawaan JS yaitu fetch()
+    // const [products, setProducts] = useState([]);
+    // useEffect(() => {
+    //     fetch("/api/product")
+    //         .then((res) => res.json())
+    //         .then((response) => {
+    //             setProducts(response.data);
+    //         });
 
-    const [products, setProducts] = useState([]);
+    // }, []);
 
-    useEffect(() => {
-        // Menggunakan bawaan JS yaitu fetch()
-        fetch("/api/product")
-            .then((res) => res.json())
-            .then((response) => {
-                setProducts(response.data);
-            });
-
-    }, [])
-
+    //? Client-Side Rendering Menggunakan SWR
+    const { data, error, isLoading } = useSWR(
+        "/api/product",
+        fetcher
+    );
 
     return (
         <>
             <Head>
                 <title>Product</title>
             </Head>
-            <div className="w-full h-screen bg-white text-tradewind flex flex-col justify-center items-center gap-y-7">
-                <h1 className="text-4xl">Product Page</h1>
-                <div className="overflow-x-auto">
-                    <table className="table">
-                        <thead>
-                            <tr className="text-eden">
-                                <th>No.</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Discount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {products.map((product: productType, index) => (
-                                <tr key={product.id} className="text-fun-green hover:bg-tradewind/25 transition">
-                                    <th>{index+1}</th>
-                                    <td>{product.name}</td>
-                                    <td>Rp{product.price}</td>
-                                    <td>{product.discount}%</td>
-                                </tr>
+            <div className="w-full bg-white">
+                <h1 className="text-4xl text-center mt-5 mb-10 font-bold text-tradewind">Product</h1>
+                <div className="flex justify-center gap-5">
+
+                    {isLoading ? (
+                        <>
+                            <div className="card card-compact w-96 bg-base-100 shadow-xl">
+                                <figure className="bg-gray-300 w-full aspect-square animate-pulse" />
+                                <div className="card-body">
+                                    <h2 className="bg-gray-300 w-full h-4 animate-pulse" />
+                                    <p className="bg-gray-300 w-full h-4 animate-pulse" />
+                                    <p className="bg-gray-300 w-full h-4 animate-pulse" />
+                                </div>
+                            </div>
+                        </>
+
+                    ) : (
+                        <>
+                            {data.data.map((product: productType) => (
+                                <div key={product.id} className="card card-compact w-96 bg-base-100 shadow-xl">
+                                    <figure><img src={product.image} alt={product.name} /></figure>
+                                    <div className="card-body">
+                                        <h2 className="text-xl font-bold text-fun-green">{product.name}</h2>
+                                        <p className="text-base text-tradewind">{product.category}</p>
+                                        <p className="text-base font-bold text-fun-green">{product.price.toLocaleString('id-ID', { style: "currency", currency: "IDR" })}</p>
+                                    </div>
+                                </div>
                             ))}
-                        </tbody>
-                    </table>
+
+                        </>
+                    )}
                 </div>
             </div>
         </>
