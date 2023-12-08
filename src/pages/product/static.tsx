@@ -9,8 +9,10 @@ export async function getStaticProps() {
 
     return {
         props: {
-            products: response.data
+            products: response.data,
         },
+        //? Incremental Static Regeneration --> revalidate: <second>
+        // revalidate: 5,
     };
 }
 
