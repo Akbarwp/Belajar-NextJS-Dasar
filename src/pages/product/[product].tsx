@@ -5,16 +5,16 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 
 //? Implementasi Dynamic Routes --> Server-Side Rendering
-export async function getServerSideProps({ params }: { params: { product: string } }) {
-    const res = await fetch(`http://localhost:3000/api/product/${params.product}`);
-    const response = await res.json();
+// export async function getServerSideProps({ params }: { params: { product: string } }) {
+//     const res = await fetch(`http://localhost:3000/api/product/${params.product}`);
+//     const response = await res.json();
 
-    return {
-        props: {
-            product: response.data
-        },
-    };
-}
+//     return {
+//         props: {
+//             product: response.data
+//         },
+//     };
+// }
 
 //? Implementasi Dynamic Routes --> Static Site Rendering
 // export async function getStaticPaths() {
