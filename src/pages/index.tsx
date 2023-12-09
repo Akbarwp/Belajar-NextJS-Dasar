@@ -3,14 +3,15 @@ import { useState, useEffect } from 'react';
 
 export default function Index() {
 
-    const [isLogin, setIsLogin] = useState(false);
     const { push } = useRouter();
 
-    useEffect(() => {
-        if (!isLogin) {
-            push('/auth/login');
-        }
-    }, []);
+    //? Mengecek apakah sudah login atau belum
+    // const [isLogin, setIsLogin] = useState(false);
+    // useEffect(() => {
+    //     if (!isLogin) {
+    //         push('/auth/login');
+    //     }
+    // }, []);
 
     return (
         <>
