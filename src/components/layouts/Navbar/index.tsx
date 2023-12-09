@@ -1,6 +1,10 @@
-import Link from "next/link"
+import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Navbar() {
+
+    const { data }: any = useSession();
+
     return (
         <>
             <div className="navbar bg-fun-green">
@@ -41,10 +45,54 @@ export default function Navbar() {
                     </ul>
                 </div>
                 <div className="navbar-end gap-x-2">
-                    <Link href="/auth/register" className="btn uppercase font-bold text-fun-green bg-white border-white hover:text-white hover:bg-tradewind hover:border-tradewind">Register</Link>
-                    <Link href="/auth/login" className="btn uppercase font-bold text-amber-900 bg-dawn-pink border-dawn-pink hover:text-white hover:bg-almond-forest hover:border-almond-forest">Login</Link>
+                    {data ? (
+                        <>
+                            <div className="dropdown dropdown-end">
+                                <div className="flex items-center mr-3">
+                                    <span className="text-white font-semibold mr-1">{data && data.user.username}</span>
+                                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                        <div className="w-9 rounded-full">
+                                            <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 text-fun-green">
+                                    <li>
+                                        <a href="/profile" className="justify-between">
+                                            Profile
+                                        </a>
+                                    </li>
+                                    <li><a>Settings</a></li>
+                                    <li>
+                                        {/* Sign In dari Next-Auth */}
+                                        <a onClick={() => signOut()}>
+                                            Sign Out
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </>
+
+                    ) : (
+                        <>
+                            {/* Sign Up biasa */}
+                            <Link href="/auth/register" className="btn uppercase font-bold text-fun-green bg-white border-white hover:text-white hover:bg-tradewind hover:border-tradewind">
+                                Register
+                            </Link>
+
+                            {/* Login biasa */}
+                            {/* <Link href="/auth/login" className="btn uppercase font-bold text-amber-900 bg-dawn-pink border-dawn-pink hover:text-white hover:bg-almond-forest hover:border-almond-forest">
+                                Login
+                            </Link> */}
+
+                            {/* Sign In dari Next-Auth */}
+                            <button onClick={() => signIn()} className="btn uppercase font-bold text-amber-900 bg-dawn-pink border-dawn-pink hover:text-white hover:bg-almond-forest hover:border-almond-forest">
+                                Sign In
+                            </button>
+                        </>
+                    )}
                 </div>
-            </div>
+            </div >
         </>
     )
 }
