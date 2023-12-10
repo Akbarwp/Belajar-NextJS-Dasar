@@ -54,7 +54,7 @@ export async function register(
     } else {
         //? Hashing password
         userData.password = await bcrypt.hash(userData.password, 10);
-        userData.role = "Member";
+        userData.role = "member";
 
         //? Insert data ke database
         await addDoc(collection(firestore, "users"), userData).then(() => {
@@ -63,5 +63,20 @@ export async function register(
         }).catch((error) => {
             callback({ status: false, message: error });
         });
+    }
+}
+
+export async function login(userData: { email: string }) {
+    const q = query(collection(firestore, "users"), where("email", "==", userData.email));
+    const snapshot = await getDocs(q);
+    const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    }));
+
+    if (data) {
+        return data[0];
+    } else {
+        return null;
     }
 }

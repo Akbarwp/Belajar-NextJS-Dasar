@@ -1,3 +1,5 @@
+import { login } from "@/lib/firebase/services";
+import { compare } from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -13,21 +15,28 @@ const authOptions: NextAuthOptions = {
             type: "credentials",
             name: "Credentials",
             credentials: {
-                username: { label: "Username", type: "text" },
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
             },
             //? Ketika klik tombol Sign In akan menjalankan ini
             async authorize(credentials) {
-                const { username, email, password } = credentials as {
-                    username: string;
+                const { email, password } = credentials as {
                     email: string;
                     password: string;
                 };
 
-                const user: any = { id: 1, username:username, email: email, password: password };
+                //? Testing login
+                // const user: any = { id: 1, email: email, password: password };
+
+                //? Login dengan database: firebase
+                const user: any = await login({ email });
+
                 if (user) {
-                    return user;
+                    const passwordConfirm = await compare(password, user.password);
+                    if (passwordConfirm) {
+                        return user;
+                    }
+                    return null;
                 } else {
                     return null;
                 }
@@ -41,6 +50,7 @@ const authOptions: NextAuthOptions = {
                 //? untuk mengirimkan data yang diperlukan ke session
                 token.email = user.email;
                 token.username = user.username;
+                token.role = user.role;
             }
             //? token secara default berisi = email, picture, name
             return token;
@@ -53,10 +63,16 @@ const authOptions: NextAuthOptions = {
             if ("username" in token) {
                 session.user.username = token.username;
             }
+            if ("role" in token) {
+                session.user.role = token.role;
+            }
             //? session biasanya berisi = email, expires
             return session;
         }
     },
+    pages: {
+        signIn: "/auth/login",
+    }
 };
 
 export default NextAuth(authOptions);
