@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { productType } from "@/types/product.type";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Index() {
     //? Client-Side Rendering Menggunakan bawaan JS yaitu fetch()
@@ -30,7 +31,7 @@ export default function Index() {
             </Head>
             <div className="w-full bg-white">
                 <h1 className="text-4xl text-center mt-5 mb-10 font-bold text-tradewind">Product</h1>
-                <div className="flex justify-center gap-5">
+                <div className="flex flex-wrap justify-center gap-5">
 
                     {isLoading ? (
                         <>
@@ -48,7 +49,7 @@ export default function Index() {
                         <>
                             {data.data.map((product: productType) => (
                                 <div key={product.id} className="card card-compact w-96 bg-base-100 shadow-xl">
-                                    <figure><img src={product.image} alt={product.name} /></figure>
+                                    <figure><Image className="w-full" width={600} height={600} src={product.image} alt={product.name} /></figure>
                                     <div className="card-body">
                                         <Link href={`/product/${product.id}`} className="text-xl font-bold text-fun-green">{product.name}</Link>
                                         <p className="text-base text-tradewind">{product.category}</p>

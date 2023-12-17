@@ -1,6 +1,7 @@
 import { fetcher } from "@/lib/swr/fetcher";
 import { productType } from "@/types/product.type";
 import Head from "next/head";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
@@ -85,7 +86,7 @@ export default function DetailProduct() {
                     ) : (
                         <>
                             <div className="card card-compact w-96 bg-base-100 shadow-xl">
-                                <figure><img src={product.image} alt={product.name} /></figure>
+                                <figure><Image className="w-full" width={600} height={600} src={product.image} alt={product.name} /></figure>
                                 <div className="card-body">
                                     <div className="text-xl font-bold text-fun-green">{product.name}</div>
                                     <p className="text-base text-tradewind">{product.category}</p>

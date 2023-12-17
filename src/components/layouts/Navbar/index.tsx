@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import Script from "next/script";
 
 export default function Navbar() {
 
@@ -26,7 +28,12 @@ export default function Navbar() {
                             <li className="text-fun-green"><Link href="/product">Product</Link></li>
                         </ul>
                     </div>
-                    <Link href="/" className="btn btn-ghost text-xl text-white">Home</Link>
+
+                    {/* Contoh penggunaan optimasi Script --> biasanya digunakan untuk Google Analytics */}
+                    <Link href="/" className="btn btn-ghost text-xl text-white" id="title"></Link>
+                    <Script id="script-title" strategy="lazyOnload">
+                        {`document.getElementById('title').innerHTML = 'Home'`}
+                    </Script>
                 </div>
                 {/* Website */}
                 <div className="navbar-center hidden lg:flex">
@@ -52,18 +59,18 @@ export default function Navbar() {
                                     <span className="text-white font-semibold mr-1">{data && data.user.username}</span>
                                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                         <div className="w-9 rounded-full">
-                                            <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                            <Image width={100} height={100} alt="Photo Profile" src="/photoProfile.jpg" />
                                         </div>
                                     </div>
                                 </div>
                                 <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 text-fun-green">
                                     {data.user.role === "admin" ? 
-                                        <li><a href="/admin">Admin</a></li>
+                                        <li><Link href="/admin">Admin</Link></li>
                                     : ""}
                                     <li>
-                                        <a href="/profile" className="justify-between">
+                                        <Link href="/profile" className="justify-between">
                                             Profile
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li><a>Settings</a></li>
                                     <li>

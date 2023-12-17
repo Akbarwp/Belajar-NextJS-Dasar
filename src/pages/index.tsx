@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
@@ -15,6 +16,9 @@ export default function Index() {
 
     return (
         <>
+            <Head>
+                <title>Home</title>
+            </Head>
             <div className="hero min-h-screen">
                 <div className="hero-content text-center">
                     <div className="max-w-md">

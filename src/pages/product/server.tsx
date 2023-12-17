@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { productType } from "@/types/product.type";
+import Image from "next/image";
 
 //? Server-Side Rendering
 // Dipanggil setiap melakukan request
@@ -32,7 +33,7 @@ export default function Index(props: { products: productType[] }) {
                         <>
                             {products.map((product: productType) => (
                                 <div key={product.id} className="card card-compact w-96 bg-base-100 shadow-xl">
-                                    <figure><img src={product.image} alt={product.name} /></figure>
+                                    <figure><Image className="w-full" width={600} height={600} src={product.image} alt={product.name} /></figure>
                                     <div className="card-body">
                                         <h2 className="text-xl font-bold text-fun-green">{product.name}</h2>
                                         <p className="text-base text-tradewind">{product.category}</p>
