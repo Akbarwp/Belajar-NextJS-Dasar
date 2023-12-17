@@ -47,7 +47,7 @@ export default function Index() {
 
                     ) : (
                         <>
-                            {data.data.map((product: productType) => (
+                            {data?.data?.map((product: productType) => (
                                 <div key={product.id} className="card card-compact w-96 bg-base-100 shadow-xl">
                                     <figure><Image className="w-full" width={600} height={600} src={product.image} alt={product.name} /></figure>
                                     <div className="card-body">
