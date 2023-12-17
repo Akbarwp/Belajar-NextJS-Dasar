@@ -2,6 +2,7 @@ import { NextFetchEvent, NextMiddleware, NextRequest, NextResponse } from "next/
 import { getToken } from "next-auth/jwt";
 
 const onlyAdmin = ["/admin"];
+const authPage = ['/login', '/register'];
 
 export default function withAuth(middleware: NextMiddleware, requireAuth: string[] = []) {
     return async (req: NextRequest, next: NextFetchEvent) => {
@@ -12,14 +13,20 @@ export default function withAuth(middleware: NextMiddleware, requireAuth: string
                 secret: process.env.NEXTAUTH_SECRET
             });
 
-            if (!token) {
+            if (!token && !authPage.includes(pathname)) {
                 const url = new URL("/auth/login", req.url);
                 url.searchParams.set("callbackUrl", encodeURI(req.url));
                 return NextResponse.redirect(url);
             }
 
-            if (token.role !== "admin" && onlyAdmin.includes(pathname)) {
-                return NextResponse.redirect(new URL("/", req.url));
+            if (token) {
+                if (authPage.includes(pathname)) {
+                    return NextResponse.redirect(new URL('/', req.url));
+                }
+
+                if (token.role !== "admin" && onlyAdmin.includes(pathname)) {
+                    return NextResponse.redirect(new URL("/", req.url));
+                }
             }
         }
 
